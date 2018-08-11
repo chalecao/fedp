@@ -54,18 +54,28 @@ exports.default = function () {
                         ip = (0, _util.getIPAdress)();
                         newdomain = ip;
 
-                        if (!domain) {
+                        if (!(typeof domain == "string")) {
                             _context.next = 8;
                             break;
                         }
 
-                        _context.next = 7;
-                        return (0, _util.applyDomain)();
-
-                    case 7:
-                        newdomain = _context.sent;
+                        newdomain = domain;
+                        _context.next = 12;
+                        break;
 
                     case 8:
+                        if (!domain) {
+                            _context.next = 12;
+                            break;
+                        }
+
+                        _context.next = 11;
+                        return (0, _util.applyDomain)();
+
+                    case 11:
+                        newdomain = _context.sent;
+
+                    case 12:
                         log.info('ip: ' + ip);
                         port = port || config.port;
                         //注入处理函数
@@ -106,7 +116,7 @@ exports.default = function () {
                             }
                         });
 
-                    case 22:
+                    case 26:
                     case 'end':
                         return _context.stop();
                 }
