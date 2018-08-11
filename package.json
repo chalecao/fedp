@@ -4,7 +4,7 @@
   "description": "a dev tool make you debug and mock data easy!",
   "main": "index.js",
   "bin": {
-    "anywrapper": "./es/bin.js"
+    "adev": "./es/bin.js"
   },
   "scripts": {
     "babel": "babel src/ -d es/",
