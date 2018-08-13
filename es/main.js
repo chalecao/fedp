@@ -76,7 +76,8 @@ exports.default = function () {
                         newdomain = _context.sent;
 
                     case 12:
-                        log.info('ip: ' + ip);
+                        log.info('start ...');
+                        log.info('domain: ' + newdomain + ', ip: ' + ip);
                         port = port || config.port;
                         //注入处理函数
                         (0, _server.hookRequestHandler)(_util.handleZebra);
@@ -116,7 +117,7 @@ exports.default = function () {
                             }
                         });
 
-                    case 26:
+                    case 27:
                     case 'end':
                         return _context.stop();
                 }

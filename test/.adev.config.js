@@ -7,7 +7,7 @@ const targetStatic = 'http://127.0.0.1:8000';
 
 module.exports = {
     port: 8889,
-    domain: false,
+    domain: "test.tmall.com",
     debug: true,
     mock: true,
     debugPort: 9000,
@@ -17,13 +17,13 @@ module.exports = {
     scripts: [
     ],
     proxy: [{
-        "path": "h5/",
+        "path": "mtop",
         "routeTo": targetMtop
     }, {
-        "path": "/h5/mtop.tmall.supermarket.city.timeline.get",
+        "path": "mtop.tmall.supermarket.city.timeline.get",
         "data": JSON.stringify(data)
     }, {
-        "path": "/h5/mtop.tmall.supermarket.city.timeline.get",
+        "path": "mtop.tmall.supermarket.city.timeline.get",
         "data": { msg: "true" }
     }]
 }
