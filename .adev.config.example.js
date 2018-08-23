@@ -9,9 +9,9 @@ const targetMockServer = 'https://127.0.0.1/';
 
 module.exports = {
     port: 8889,               // proxy server port
-    domain: false, // true to apply new domain, false to use ip, or you self domain
+    domain: "test.tmall.com", // true to apply new domain, false to use ip, or you self domain
     debug: true,              // enable debug
-    mock: false,               // enable debug
+    mock: true,               // enable debug
     debugPort: 9000,          // debug server port
     cmds: [                   // cmds you want run 
         // "tap server"      
@@ -24,18 +24,18 @@ module.exports = {
             data: "g.alicdn.com"
         }, {
             path: ".*",
-            data: "pre-wormhole.tmall.com"
+            data: "test.tmall.com"
         }],
         hostname: [{          // proxy hostname config
             path: ".*",
-            data: "pre-wormhole.tmall.com"
+            data: "127.0.0.1"
         }],
         port: [{              // proxy port config
             path: "/cdn",
-            data: 80
+            data: 8000
         }, {
             path: ".*",
-            data: 80
+            data: 3000
         }]
     },
     mocky: [{                // mock hostname config

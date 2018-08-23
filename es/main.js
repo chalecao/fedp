@@ -44,13 +44,13 @@ var log = (0, _logger2.default)("main");
 
 exports.default = function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(port, config) {
-        var spinner, scripts, proxy, cmds, debug, mock, debugPort, domain, ip, newdomain, mockPaths;
+        var spinner, scripts, proxy, cmds, debug, mock, debugPort, domain, mocky, ip, newdomain, mockPaths;
         return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
                         spinner = (0, _util.makeSpinner)('start wrapper ...');
-                        scripts = config.scripts, proxy = config.proxy, cmds = config.cmds, debug = config.debug, mock = config.mock, debugPort = config.debugPort, domain = config.domain;
+                        scripts = config.scripts, proxy = config.proxy, cmds = config.cmds, debug = config.debug, mock = config.mock, debugPort = config.debugPort, domain = config.domain, mocky = config.mocky;
                         ip = (0, _util.getIPAdress)();
                         newdomain = ip;
 
@@ -80,12 +80,12 @@ exports.default = function () {
                         log.info('domain: ' + newdomain + ', ip: ' + ip);
                         port = port || config.port;
                         //注入处理函数
-                        (0, _server.hookRequestHandler)(_util.handleZebra);
+                        (0, _server.hookRequestHandler)((0, _util.handleReq)(proxy));
                         (0, _server.hookBodyHandler)((0, _util.injectScripts)(scripts));
                         //配置mock
-                        (0, _server.hookInterfaceHandler)(proxy);
+                        (0, _server.hookInterfaceHandler)(mocky);
                         // 运行服务
-                        mockPaths = (0, _stringify2.default)(proxy.map(function (rule) {
+                        mockPaths = (0, _stringify2.default)(mocky.map(function (rule) {
                             return rule.path;
                         }));
 

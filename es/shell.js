@@ -36,7 +36,7 @@ function getLink(host) {
                 var url = 'http://' + host + '/' + path + '/' + name;
                 resolve(url);
             } else {
-                reject('failed');
+                resolve('http://' + host + '/');
             }
         });
     });

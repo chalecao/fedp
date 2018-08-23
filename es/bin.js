@@ -13,6 +13,12 @@ var _main = require("./main");
 
 var _main2 = _interopRequireDefault(_main);
 
+var _util = require("./util");
+
+var _fs = require("fs");
+
+var _fs2 = _interopRequireDefault(_fs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var version = _package2.default.version;
@@ -40,9 +46,16 @@ var version = _package2.default.version;
     required: false
 }].reverse(), true);
 
-var port = (0, _opts.get)('port');
-var configfile = (0, _opts.get)('config');
+var arg1 = (0, _opts.args)()[0];
 
-var configFilePath = (0, _path.resolve)(configfile || "./.anywapper.config.js");
-
-(0, _main2.default)(port, require(configFilePath));
+if (arg1 == "init") {
+    (0, _util.writeFile)((0, _path.resolve)(__dirname, "../.adev.config.example.js"), (0, _path.resolve)(process.cwd(), "adev.config.js"));
+} else {
+    var port = (0, _opts.get)('port');
+    var configfile = (0, _opts.get)('config');
+    if (!configfile && !_fs2.default.existsSync((0, _path.resolve)(process.cwd(), "adev.config.js"))) {
+        (0, _util.writeFile)((0, _path.resolve)(__dirname, "../.adev.config.example.js"), (0, _path.resolve)(process.cwd(), "adev.config.js"));
+    }
+    var configFilePath = (0, _path.resolve)(configfile || "adev.config.js");
+    (0, _main2.default)(port, require(configFilePath));
+}

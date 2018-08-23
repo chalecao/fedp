@@ -125,14 +125,14 @@ function mockResponse(response, url, rule) {
 
 function proxyResponse(requestOptions, rule) {
     if (rule.routeTo.match("//")) {
-        var _targetUrl = rule.routeTo;
+        var targetUrl = rule.routeTo;
         var callbackName = new RegExp("callback=(.*)&", "g").exec(requestOptions.url);
         if (callbackName && callbackName[1]) {
-            _targetUrl += "?callback=" + callbackName[1];
+            targetUrl += "?callback=" + callbackName[1];
         }
-        requestOptions.url = _targetUrl;
+        requestOptions.url = targetUrl;
+        requestOptions.headers.host = _url2.default.parse(targetUrl).hostname;
     }
-    requestOptions.headers.host = _url2.default.parse(targetUrl).hostname;
     return requestOptions;
 }
 
@@ -156,13 +156,14 @@ function createServer(port) {
                 } else {
 
                     rule && (requestOptions = proxyResponse(requestOptions, rule));
-
+                    requestOptions.gzip = true;
                     (0, _request2.default)(requestOptions, function (error, res, body) {
                         if (error) {
                             response.end('error: ' + error.message);
                         } else {
                             var header = handleHeader(url, res, body);
                             body = handleBody(body);
+                            header['content-encoding'] = "";
                             response.writeHead(res.statusCode, header);
                             response.end(body);
                         }

@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.injectScripts = undefined;
+exports.handleReq = exports.injectScripts = undefined;
 exports.applyDomain = applyDomain;
 exports.makeSpinner = makeSpinner;
-exports.handleZebra = handleZebra;
 exports.getIPAdress = getIPAdress;
+exports.writeFile = writeFile;
 
 var _domain = require('@ali/tbdomain/domain');
 
@@ -24,6 +24,10 @@ var _url2 = _interopRequireDefault(_url);
 var _cliSpinner = require('cli-spinner');
 
 var _cliSpinner2 = _interopRequireDefault(_cliSpinner);
+
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,23 +70,35 @@ var injectScripts = exports.injectScripts = function injectScripts(scripts) {
     };
 };
 
-function handleZebra(options) {
-    var isCDN = false;
-    if (options.url.indexOf('/cdn') === 0) {
-        options.url = options.url.slice(4);
-        isCDN = true;
-    }
-    options.headers.host = isCDN ? 'g.alicdn.com' : 'test.tmall.com';
-    var port = isCDN ? 8000 : 3000;
+var handleReq = exports.handleReq = function handleReq(proxy) {
+    return function (options) {
 
-    options.uri = _url2.default.parse(options.url);
-    options.uri.hostname = "127.0.0.1";
-    options.uri.port = port;
-    options.uri.protocol = 'http:';
-    options.uri = _url2.default.format(options.uri);
+        var urlPath = options.url;
+        // http 1.1中不能缺失host行，如果缺失，服务器返回400 bad request 
+        var hostRule = proxy.host.find(function (item) {
+            return urlPath.match(new RegExp(item.path));
+        });
+        options.headers.host = hostRule.data;
 
-    return options;
-}
+        options.uri = _url2.default.parse(urlPath);
+
+        var portRule = proxy.port.find(function (item) {
+            return urlPath.match(new RegExp(item.path));
+        });
+        options.uri.port = portRule.data;
+
+        var hostNameRule = proxy.hostname.find(function (item) {
+            return urlPath.match(new RegExp(item.path));
+        });
+        options.uri.hostname = hostNameRule.data;
+
+        options.uri.protocol = 'http:';
+
+        options.uri = _url2.default.format(options.uri);
+
+        return options;
+    };
+};
 
 function getIPAdress() {
     var interfaces = require('os').networkInterfaces();
@@ -95,4 +111,9 @@ function getIPAdress() {
             }
         }
     }
+}
+
+function writeFile(src, dist) {
+    var content = _fs2.default.readFileSync(src);
+    _fs2.default.writeFileSync(dist, content);
 }
