@@ -1,17 +1,17 @@
 /**
- * adev config file, be free to modify
- * proxy: proxy rule
- * mocky: mock rule
+ * 斑马源码页面开发使用配置
+ * domainy: 域名重写规则，主要用于远程调试，如果是本地有host配置，则不用设置该配置项
+ * proxy: 资源和端口映射规则
+ * mocky: 数据mock配置
  */
 
-// var data = require("./data.json")
 const targetMockServer = 'https://127.0.0.1/';
 
 module.exports = {
     port: 8889,               // proxy server port
-    domain: false, // true to apply new domain, false to use ip, or you self domain string string like "test.tmall.com"
+    domain: "test.tmall.com", // true to apply new domain, false to use ip, or you self domain string like "test.tmall.com"
     debug: true,              // enable debug
-    mock: true,               // enable debug
+    mock: false,               // enable debug
     debugPort: 9000,          // debug server port
     cmds: [                   // cmds you want run 
         // "tap server"      
@@ -24,34 +24,33 @@ module.exports = {
         data: "__ip__:8889/??"
     }],
     proxy: {
-        host: [{              // proxy host config
-            path: "/cdn",
+        host: [{              // proxy requestoption host config
+            path: "\\?\\?",
             data: "g.alicdn.com"
         }, {
             path: ".*",
             data: "test.tmall.com"
         }],
-        hostname: [{          // proxy hostname config
+        hostname: [{          // proxy requestoption hostname config
             path: ".*",
             data: "127.0.0.1"
         }],
-        port: [{              // proxy port config
-            path: "/cdn",
+        port: [{              // proxy requestoption port config
+            path: "\\?\\?",
             data: 8000
         }, {
             path: ".*",
             data: 3000
         }]
     },
-    mocky: [{                // mock hostname config
-        path: "timeline.get",
-        data: { msg: "true" }
-        // }, {
-        //     path: "data.get",
-        //     data: data
+    mocky: [{
+        path: "getBrandWelfare",
+        // data: require("./demo/getBrandWelfare.json")
     }, {
-        path: "api",
+        path: "getBrandGoods",
+        data: { msg: "ok" }
+    }, {
+        path: "apiOnMockServer",
         routeTo: targetMockServer
-
     }]
 }

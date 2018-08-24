@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.handleReq = exports.injectScripts = undefined;
+exports.handleReq = exports.replaceDomain = exports.injectScripts = undefined;
 exports.applyDomain = applyDomain;
 exports.makeSpinner = makeSpinner;
 exports.getIPAdress = getIPAdress;
@@ -70,6 +70,16 @@ var injectScripts = exports.injectScripts = function injectScripts(scripts) {
     };
 };
 
+var replaceDomain = exports.replaceDomain = function replaceDomain(domainy, ip) {
+    return function (body) {
+        var bb = String(body);
+        domainy.forEach(function (domain) {
+            bb = bb.replace(new RegExp(domain.path, 'gi'), domain.data.replace("__ip__", ip));
+        });
+        return bb;
+    };
+};
+
 var handleReq = exports.handleReq = function handleReq(proxy) {
     return function (options) {
 
@@ -96,6 +106,7 @@ var handleReq = exports.handleReq = function handleReq(proxy) {
 
         options.uri = _url2.default.format(options.uri);
 
+        log.info('URL proxy: ', urlPath, options.uri);
         return options;
     };
 };

@@ -146,12 +146,15 @@ function createServer(port) {
             headers = request.headers;
 
         var requestOptions = handleRequest({ method: method, url: url, headers: headers });
+
         try {
             if (isAssets(requestOptions)) {
+                log.warn("Assets matched for: ", url);
                 (0, _request2.default)(requestOptions).pipe(response);
             } else {
                 var rule = matchInterface(requestOptions);
                 if (rule && rule.data) {
+                    log.warn("mock rule matched for: ", url);
                     mockResponse(response, url, rule);
                 } else {
 

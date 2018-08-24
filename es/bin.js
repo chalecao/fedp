@@ -19,6 +19,10 @@ var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
+var _promptList = require("prompt-list");
+
+var _promptList2 = _interopRequireDefault(_promptList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var version = _package2.default.version;
@@ -49,7 +53,25 @@ var version = _package2.default.version;
 var arg1 = (0, _opts.args)()[0];
 
 if (arg1 == "init") {
-    (0, _util.writeFile)((0, _path.resolve)(__dirname, "../.adev.config.example.js"), (0, _path.resolve)(process.cwd(), "adev.config.js"));
+
+    var list = new _promptList2.default({
+        name: 'Select Scene',
+        message: 'Which Scene you want to use?',
+        // choices may be defined as an array or a function that returns an array
+        choices: ['zebra-component', 'zebra-sourcecode', 'independent']
+    });
+    list.run().then(function (answer) {
+        var fileName = ".adev.config.example.js";
+        switch (answer) {
+            case 'zebra-component':
+                fileName = ".adev.config.component.js";break;
+            case 'zebra-sourcecode':
+                fileName = ".adev.config.code.js";break;
+            case 'independent':
+                fileName = ".adev.config.independent.js";break;
+        }
+        (0, _util.writeFile)((0, _path.resolve)(__dirname, "../" + fileName), (0, _path.resolve)(process.cwd(), "adev.config.js"));
+    });
 } else {
     var port = (0, _opts.get)('port');
     var configfile = (0, _opts.get)('config');
