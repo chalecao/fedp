@@ -98,7 +98,9 @@ function hookInterfaceHandler(handler) {
 }
 
 function mockResponse(response, url, rule) {
-
+    if (typeof rule.data == "string") {
+        rule.data = require((0, _path.resolve)(rule.data));
+    }
     var callbackName = new RegExp("callback=(.*)&", "g").exec(url);
     if (callbackName && callbackName[1]) {
         response.writeHead(200, {

@@ -23,10 +23,10 @@ module.exports = function mockJs() {
         })
     }
     function mockreq() {
-        let _mtopreq = window.lib.mtop.request;
-        let headers = { 'Content-Type': 'application/json;charset=UTF-8' };
+        var _mtopreq = window.lib.mtop.request;
+        var headers = { 'Content-Type': 'application/json;charset=UTF-8' };
         window.lib.mtop.request = function (args) {
-            let reqid = window.handleRequestWillBeSent && handleRequestWillBeSent({
+            var reqid = window.handleRequestWillBeSent && handleRequestWillBeSent({
                 cookie: document.cookie,
                 'Content-Type': 'application/json;charset=UTF-8'
             }, args.api, args.type, args.data);
