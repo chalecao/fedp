@@ -80,7 +80,8 @@ if (arg1 == "init") {
 } else {
     if (!configfile && !_fs2.default.existsSync((0, _path.resolve)(process.cwd(), "adev.config.js"))) {
         createConfig();
+    } else {
+        var configFilePath = (0, _path.resolve)(configfile || "adev.config.js");
+        (0, _main2.default)(port, require(configFilePath));
     }
-    var configFilePath = (0, _path.resolve)(configfile || "adev.config.js");
-    (0, _main2.default)(port, require(configFilePath));
 }
