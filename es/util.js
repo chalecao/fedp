@@ -106,7 +106,7 @@ var handleReq = exports.handleReq = function handleReq(proxy) {
 
         options.uri = _url2.default.format(options.uri);
 
-        log.info('URL proxy: ', urlPath, options.uri);
+        log.info('URL proxy: ', urlPath.slice(0, 100), options.uri.slice(0, 100));
         return options;
     };
 };
