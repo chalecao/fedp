@@ -53,7 +53,7 @@ function matchInterface(_ref) {
     var url = _ref.url;
 
     return interfaceHandlers.find(function (rule) {
-        if (rule && rule.path && new RegExp(rule.path).exec(url)) {
+        if (rule && rule.path && new RegExp(rule.path, "g").exec(url)) {
             return true;
         }
     });
@@ -72,7 +72,7 @@ function matchCDP(CDP, url) {
             })];
         });
     });
-    console.log(url, "scriptmocky", (0, _stringify2.default)(scriptmocky).slice(0, 10000));
+    // console.log(url, "scriptmocky", JSON.stringify(scriptmocky).slice(0, 10000))
     return scriptmocky.find(function (rule) {
         if (rule && rule.path.match(url)) {
             return true;
