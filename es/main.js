@@ -44,7 +44,7 @@ var log = (0, _logger2.default)("main");
 
 exports.default = function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(port, config) {
-        var spinner, scripts, proxy, cmds, debug, mock, debugPort, domain, mocky, domainy, simulator, ip, newdomain, mockPaths;
+        var spinner, scripts, proxy, cmds, debug, mock, debugPort, domain, mocky, domainy, simulator, ip, newdomain, mockPaths, CDP;
         return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
@@ -95,15 +95,17 @@ exports.default = function () {
                         (0, _server.hookBodyHandler)((0, _util.injectScripts)(['window.mockPaths = ' + mockPaths + ';', '(' + _mock2.default.toString() + ')()']));
                         domainy && (0, _server.hookBodyHandler)((0, _util.replaceDomain)(domainy, ip));
 
+                        CDP = null;
+
                         if (debug) {
-                            (0, _anydebugger2.default)(debugPort, true);
+                            CDP = (0, _anydebugger2.default)(debugPort, true);
                             (0, _server.hookBodyHandler)((0, _util.injectScripts)(['//' + ip + ':' + debugPort + '/static/js/anydebugger.js']));
                             log.info('debug server start successfully at ' + newdomain + ':' + debugPort + ' !');
                         }
                         (0, _shell.runCmds)(cmds);
                         //启动服务
                         try {
-                            (0, _server.createServer)(port);
+                            (0, _server.createServer)(port, CDP);
                         } catch (e) {
                             log.debug("error: ", e);
                         }
@@ -118,7 +120,7 @@ exports.default = function () {
                             }
                         });
 
-                    case 27:
+                    case 28:
                     case 'end':
                         return _context.stop();
                 }

@@ -8,6 +8,10 @@ var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
 exports.hookHeaderHandler = hookHeaderHandler;
 exports.hookBodyHandler = hookBodyHandler;
 exports.hookRequestHandler = hookRequestHandler;
@@ -50,6 +54,27 @@ function matchInterface(_ref) {
 
     return interfaceHandlers.find(function (rule) {
         if (rule && rule.path && new RegExp(rule.path).exec(url)) {
+            return true;
+        }
+    });
+}
+function matchCDP(CDP, url) {
+    var pages = CDP.getInstance().pages;
+    var scriptmocky = [];
+    pages && pages.forEach(function (page) {
+        var mockscripts = page.mockscripts;
+        mockscripts && (0, _keys2.default)(mockscripts).forEach(function (key) {
+            return [
+            // {url:'', content:''}
+            scriptmocky.push({
+                path: mockscripts[key].url,
+                data: mockscripts[key].content
+            })];
+        });
+    });
+    console.log(url, "scriptmocky", (0, _stringify2.default)(scriptmocky).slice(0, 10000));
+    return scriptmocky.find(function (rule) {
+        if (rule && rule.path.match(url)) {
             return true;
         }
     });
@@ -98,35 +123,44 @@ function hookInterfaceHandler(handler) {
 }
 
 function mockResponse(response, url, rule) {
+    var contype = 'application/json';
     if (typeof rule.data == "string") {
-        rule.data = require((0, _path.resolve)(rule.data));
+        if (rule.data.substr(-4) == "json") {
+            rule.data = require((0, _path.resolve)(rule.data));
+        } else {
+            contype = 'application/javascript; charset=utf-8';
+        }
+    }
+    var res = rule.data;
+    if (typeof rule.data == "object") {
+        res = (0, _stringify2.default)(rule.data);
     }
     var callbackName = new RegExp("callback=(.*)&", "g").exec(url);
     if (callbackName && callbackName[1]) {
         response.writeHead(200, {
-            'Content-Type': 'application/json',
+            'Content-Type': contype,
             'Access-Control-Allow-Origin': rule.origin || "*",
             'Access-Control-Allow-Credentials': true,
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
             'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
             'set-cookie': rule.cookie || ""
         });
-        response.end(callbackName[1] + "(" + (0, _stringify2.default)(rule.data) + ")");
+        response.end(callbackName[1] + "(" + res + ")");
     } else {
         response.writeHead(200, {
-            'Content-Type': 'application/json',
+            'Content-Type': contype,
             'Access-Control-Allow-Origin': rule.origin || "*",
             'Access-Control-Allow-Credentials': true,
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
             'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
             'set-cookie': rule.cookie || ""
         });
-        response.end((0, _stringify2.default)(rule.data));
+        response.end(res);
     }
 }
 
 function proxyResponse(requestOptions, rule) {
-    if (rule.routeTo.match("//")) {
+    if (rule.routeTo && rule.routeTo.match("//")) {
         var targetUrl = rule.routeTo;
         var callbackName = new RegExp("callback=(.*)&", "g").exec(requestOptions.url);
         if (callbackName && callbackName[1]) {
@@ -138,7 +172,7 @@ function proxyResponse(requestOptions, rule) {
     return requestOptions;
 }
 
-function createServer(port) {
+function createServer(port, cdp) {
     /**
      * https://github.com/request/request#requestoptions-callback
      */
@@ -154,7 +188,7 @@ function createServer(port) {
                 log.warn("Assets matched for: ", url);
                 (0, _request2.default)(requestOptions).pipe(response);
             } else {
-                var rule = matchInterface(requestOptions);
+                var rule = matchInterface(requestOptions) || matchCDP(cdp, requestOptions.url);
                 if (rule && rule.data) {
                     log.warn("mock rule matched for: ", url);
                     mockResponse(response, url, rule);
