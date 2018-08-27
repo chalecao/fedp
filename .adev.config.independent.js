@@ -19,19 +19,22 @@ module.exports = {
     scripts: [                // scripts you want to inject to the html 
     ],
     simulator: "//irma.work.ucweb.local/#/remote/remote-control-devices",   // web simulator url
-    // domainy: [{                     // proxy domain config, if not for remote debug, no need to config
-    //     path: "g.alicdn.com/\\?\\?",
-    //     data: "__ip__:8889/??"
-    // }],
+    domainy: [{                     // proxy domain config, if not for remote debug, no need to config
+        path: "g-assets.daily.taobao.net",
+        data: "__ip__:8889"
+    }],
     proxy: {
         host: [{              // proxy requestoption host config
-            path: "\\?\\?",
-            data: "g.alicdn.com"
+            path: ".(js|css)",
+            data: "g-assets.daily.taobao.net"
         }, {
             path: ".*",
             data: "pre-wormhole.tmall.com"
         }],
-        hostname: [{          // proxy requestoption hostname config
+        hostname: [{              // proxy requestoption host config
+            path: ".(js|css)",
+            data: "g-assets.daily.taobao.net"
+        }, {          // proxy requestoption hostname config
             path: ".*",
             data: "pre-wormhole.tmall.com"
         }],
