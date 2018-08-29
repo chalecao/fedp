@@ -1,6 +1,6 @@
 {
   "name": "@ali/adev",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "a dev tool make you debug and mock data easy!",
   "main": "index.js",
   "bin": {
