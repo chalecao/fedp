@@ -18,7 +18,9 @@ module.exports = {
     ],
     scripts: [                // scripts you want to inject to the html 
     ],
+    urlsuffix: "wow/ceshi/act/hurongwebbased",
     simulator: "//irma.work.ucweb.local/#/remote/remote-control-devices",   // web simulator url
+    // simulator: "//mds.alibaba-inc.com/device/93c29bb90005",   // web simulator url, 需要填写云真机的url
     domainy: [{                     // proxy domain config, if not for remote debug, no need to config
         path: "g-assets.daily.taobao.net",
         data: "__ip__:8889"
