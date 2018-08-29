@@ -44,13 +44,13 @@ var log = (0, _logger2.default)("main");
 
 exports.default = function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(port, config) {
-        var spinner, scripts, proxy, cmds, debug, mock, debugPort, domain, mocky, domainy, simulator, ip, newdomain, mockPaths, CDP;
+        var spinner, scripts, proxy, cmds, debug, mock, debugPort, domain, mocky, domainy, simulator, urlsuffix, ip, newdomain, mockPaths, CDP;
         return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
                         spinner = (0, _util.makeSpinner)('start wrapper ...');
-                        scripts = config.scripts, proxy = config.proxy, cmds = config.cmds, debug = config.debug, mock = config.mock, debugPort = config.debugPort, domain = config.domain, mocky = config.mocky, domainy = config.domainy, simulator = config.simulator;
+                        scripts = config.scripts, proxy = config.proxy, cmds = config.cmds, debug = config.debug, mock = config.mock, debugPort = config.debugPort, domain = config.domain, mocky = config.mocky, domainy = config.domainy, simulator = config.simulator, urlsuffix = config.urlsuffix;
                         ip = (0, _util.getIPAdress)();
                         newdomain = ip;
 
@@ -112,7 +112,7 @@ exports.default = function () {
                         log.info('server start successfully at ' + newdomain + ':' + port + ' !');
 
                         spinner.stop(true);
-                        (0, _shell.getLink)(newdomain + ':' + port).then(function (url) {
+                        (0, _shell.getLink)(newdomain + ':' + port, urlsuffix).then(function (url) {
                             log.warn('you can visit you project at ' + url + ' !');
                             // url && bopen(url);
                             if (debug) {
