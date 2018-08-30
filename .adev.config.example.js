@@ -1,7 +1,8 @@
 /**
- * adev config file, be free to modify
- * proxy: proxy rule
- * mocky: mock rule
+ * 独立使用配置，本例子是代理到斑马预发环境
+ * domainy: 域名重写规则，主要用于远程调试，如果是本地有host配置，则不用设置该配置项，其中path参数用于匹配url，data是对应替换值，__ip__会被替换成本地ip
+ * proxy: 资源和端口映射规则，其中path参数用于匹配url，data是设置参数
+ * mocky: 数据mock配置，需要设置mock:true 才生效，其中path参数用于匹配url，data是返回的数据，目前支持mtop的请求mock
  */
 
 // var data = require("./data.json")

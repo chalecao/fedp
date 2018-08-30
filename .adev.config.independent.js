@@ -1,8 +1,8 @@
 /**
  * 独立使用配置，本例子是代理到斑马预发环境
- * domainy: 域名重写规则，主要用于远程调试，如果是本地有host配置，则不用设置该配置项
- * proxy: 资源和端口映射规则
- * mocky: 数据mock配置
+ * domainy: 域名重写规则，主要用于远程调试，如果是本地有host配置，则不用设置该配置项，其中path参数用于匹配url，data是对应替换值，__ip__会被替换成本地ip
+ * proxy: 资源和端口映射规则，其中path参数用于匹配url，data是设置参数
+ * mocky: 数据mock配置，需要设置mock:true 才生效，其中path参数用于匹配url，data是返回的数据，目前支持mtop的请求mock
  */
 
 const targetMockServer = 'https://127.0.0.1/';
@@ -11,7 +11,7 @@ module.exports = {
     port: 8889,               // proxy server port
     domain: false, // true to apply new domain, false to use ip, or you self domain string like "test.tmall.com"
     debug: true,              // enable debug
-    mock: false,               // enable debug
+    mock: false,               // enable mock
     debugPort: 9000,          // debug server port
     cmds: [                   // cmds you want run 
         // "tap server"      
@@ -21,7 +21,7 @@ module.exports = {
     urlsuffix: encodeURIComponent("wow/ceshi/act/hurongwebbased"),
     simulator: "//irma.work.ucweb.local/#/remote/remote-control-devices",   // web simulator url
     // simulator: "//mds.alibaba-inc.com/device/93c29bb90005",   // web simulator url, 需要填写云真机的url
-    domainy: [{                     // proxy domain config, if not for remote debug, no need to config
+    domainy: [{                     // proxy domain config, if not for remote debug, no need to config, 
         path: "g-assets.daily.taobao.net",
         data: "__ip__:8889"
     }],
