@@ -23,33 +23,26 @@ module.exports = function mockJs() {
         })
     }
     function mockreq() {
-        var _mtopreq = window.lib.mtop.request;
+        var _mtopreq = window.lib.mtop.H5Request;
         var headers = { 'Content-Type': 'application/json;charset=UTF-8' };
-        window.lib.mtop.request = function (args) {
+        window.lib.mtop.request = window.lib.mtop.H5Request = function (args) {
             var reqid = window.handleRequestWillBeSent && handleRequestWillBeSent({
                 cookie: document.cookie,
                 'Content-Type': 'application/json;charset=UTF-8'
             }, args.api, args.type, args.data);
             if (window.mockPaths && matchInterface(mockPaths, args.api)) {
-                return new Promise(function (resolve, reject) {
-                    requestData("/api/" + args.api).then(function (res) {
-                        res = JSON.parse(res)
-                        window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, res);
-                        resolve(res)
-                    }, function (err) {
-                        window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, err);
-                        reject(res)
-                    })
-                })
-            } else {
-                return _mtopreq.call(window.lib.mtop, args).then(function (res) {
-                    window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, res);
-                    return res;
-                }, function (err) {
-                    window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, err);
-                    return Promise.reject(err);
-                })
+                lib.mtop.config.prefix = '';             
+                lib.mtop.config.subDomain = '';            
+                lib.mtop.config.mainDomain = location.host;   
+
             }
+            return _mtopreq.call(window.lib.mtop, args).then(function (res) {
+                window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, res);
+                return res;
+            }, function (err) {
+                window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, err);
+                return Promise.reject(err);
+            })
         }
     }
 

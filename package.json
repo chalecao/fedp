@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@ali/tbdomain": "^1.1.2",
-    "anydebugger": "^2.0.16",
+    "anydebugger": "^2.1.0",
     "babel-runtime": "^6.26.0",
     "bopen": "^2.3.0",
     "cli-spinner": "^0.2.8",
@@ -30,7 +30,7 @@
     "npmlog": "^4.1.2",
     "opts": "^1.2.6",
     "prompt-list": "^3.2.0",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "shelljs": "^0.8.2"
   },
   "devDependencies": {

@@ -99,7 +99,8 @@ exports.default = function () {
 
                         if (debug) {
                             CDP = (0, _anydebugger2.default)(debugPort, debuglog);
-                            (0, _server.hookBodyHandler)((0, _util.injectScripts)(['//' + ip + ':' + debugPort + '/static/js/anydebugger.js']));
+                            console.log(debugPort, debuglog);
+                            (0, _server.hookBodyHandler)((0, _util.injectScripts)(['//' + ip + ':' + debugPort + '/static/js/anydebugger.js', 'window.addEventListener(\'error\', function (event) {console.log(event.message+" at "+event.filename);});window.addEventListener(\'unhandledrejection\', function (event) {console.log(\'unhandledrejection: \'+event.reason);});']));
                             log.info('debug server start successfully at ' + newdomain + ':' + debugPort + ' !');
                         }
                         (0, _shell.runCmds)(cmds);

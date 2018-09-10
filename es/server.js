@@ -161,13 +161,14 @@ function mockResponse(response, url, rule) {
 
 function proxyResponse(requestOptions, rule) {
     if (rule.routeTo && rule.routeTo.match("//")) {
-        var targetUrl = rule.routeTo;
-        var callbackName = new RegExp("callback=(.*)&", "g").exec(requestOptions.url);
-        if (callbackName && callbackName[1]) {
-            targetUrl += "?callback=" + callbackName[1];
-        }
-        requestOptions.url = targetUrl;
-        requestOptions.headers.host = _url2.default.parse(targetUrl).hostname;
+        log.warn("route to : ", requestOptions);
+        requestOptions.uri = _url2.default.parse(requestOptions.url);
+        requestOptions.headers.host = "h5api.m.tmall.com";
+        requestOptions.uri.hostname = rule.routeTo.replace("//", "");
+        requestOptions.uri.protocol = 'http:';
+        requestOptions.uri = _url2.default.format(requestOptions.uri);
+        log.warn("route to : ", requestOptions.uri);
+        return requestOptions;
     }
     return requestOptions;
 }
