@@ -9,7 +9,8 @@
   "scripts": {
     "babel": "babel src/ -d es/ && cp src/mock.js es/mock.js",
     "server": "npm run babel && node es/bin.js",
-    "getca": "node rootca.js"
+    "getca": "node rootca.js",
+    "debug": "anydebugger"
   },
   "keywords": [
     "proxy",
@@ -21,7 +22,7 @@
     "registry": "http://registry.npm.alibaba-inc.com"
   },
   "dependencies": {
-    "anydebugger": "^2.1.1",
+    "anydebugger": "^2.1.4",
     "babel-runtime": "^6.26.0",
     "bopen": "^2.3.0",
     "cli-spinner": "^0.2.8",

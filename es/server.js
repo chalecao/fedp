@@ -52,6 +52,7 @@ function isAssets(options) {
 function matchInterface(_ref) {
     var url = _ref.url;
 
+    if (url.match(".js") || url.match(".css")) return false;
     return interfaceHandlers.find(function (rule) {
         if (rule && rule.path && new RegExp(rule.path, "g").exec(url)) {
             return true;
@@ -161,12 +162,15 @@ function mockResponse(response, url, rule) {
 
 function proxyResponse(requestOptions, rule) {
     if (rule.routeTo && rule.routeTo.match("//")) {
-        log.warn("route to : ", requestOptions);
+        // log.warn("route to : ", requestOptions)
+        requestOptions.origin = "https://chaoshi.m.tmall.com/";
+        requestOptions.referer = "https://chaoshi.m.tmall.com/";
         requestOptions.uri = _url2.default.parse(requestOptions.url);
         requestOptions.headers.host = "h5api.m.tmall.com";
-        requestOptions.uri.hostname = rule.routeTo.replace("//", "");
-        requestOptions.uri.protocol = 'http:';
+        requestOptions.uri.hostname = _url2.default.parse(rule.routeTo).hostname;
+        requestOptions.uri.protocol = _url2.default.parse(rule.routeTo).protocol;
         requestOptions.uri = _url2.default.format(requestOptions.uri);
+        requestOptions.cookie = rule.cookie || requestOptions.cookie;
         log.warn("route to : ", requestOptions.uri);
         return requestOptions;
     }
