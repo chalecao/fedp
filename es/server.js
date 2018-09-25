@@ -52,7 +52,7 @@ function isAssets(options) {
 function matchInterface(_ref) {
     var url = _ref.url;
 
-    if (url.match(".js") || url.match(".css")) return false;
+    if (url.match("\\.js") || url.match("\\.css")) return false;
     return interfaceHandlers.find(function (rule) {
         if (rule && rule.path && new RegExp(rule.path, "g").exec(url)) {
             return true;
