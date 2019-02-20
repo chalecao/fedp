@@ -4,14 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.handleReq = exports.replaceDomain = exports.injectScripts = undefined;
-exports.applyDomain = applyDomain;
 exports.makeSpinner = makeSpinner;
 exports.getIPAdress = getIPAdress;
 exports.writeFile = writeFile;
-
-var _domain = require('@ali/tbdomain/domain');
-
-var _domain2 = _interopRequireDefault(_domain);
 
 var _logger = require('./logger');
 
@@ -31,22 +26,23 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import domain from '@ali/tbdomain/domain'
 var Spinner = _cliSpinner2.default.Spinner;
 var log = (0, _logger2.default)("util");
 
-function applyDomain() {
+// export function applyDomain() {
 
-    return _domain2.default.applyDomain('', 'taobao').then(function (domainInfo) {
-        var domain = domainInfo.alias || domainInfo.domain;
+//     return domain.applyDomain('', 'taobao').then(function (domainInfo) {
+//         let domain = domainInfo.alias || domainInfo.domain;
 
-        log.warn('Domain apply success: ' + domain);
-        return domain;
-    }, function (err) {
+//         log.warn('Domain apply success: ' + domain);
+//         return domain;
+//     }, function (err) {
 
-        log.warn('Domain apply fail!');
-        return null;
-    });
-}
+//         log.warn('Domain apply fail!');
+//         return null;
+//     });
+// }
 
 function makeSpinner(txt) {
     var spinner = new Spinner(txt + ' %s');

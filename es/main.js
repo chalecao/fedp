@@ -54,28 +54,11 @@ exports.default = function () {
                         ip = (0, _util.getIPAdress)();
                         newdomain = ip;
 
-                        if (!(typeof domain == "string")) {
-                            _context.next = 8;
-                            break;
+                        if (typeof domain == "string") {
+                            newdomain = domain;
+                        } else if (domain) {
+                            // newdomain = await applyDomain();
                         }
-
-                        newdomain = domain;
-                        _context.next = 12;
-                        break;
-
-                    case 8:
-                        if (!domain) {
-                            _context.next = 12;
-                            break;
-                        }
-
-                        _context.next = 11;
-                        return (0, _util.applyDomain)();
-
-                    case 11:
-                        newdomain = _context.sent;
-
-                    case 12:
                         log.info('start ...');
                         log.info('domain: ' + newdomain + ', ip: ' + ip);
                         port = port || config.port;
@@ -121,7 +104,7 @@ exports.default = function () {
                             }
                         });
 
-                    case 28:
+                    case 21:
                     case 'end':
                         return _context.stop();
                 }
