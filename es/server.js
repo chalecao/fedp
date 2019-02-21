@@ -126,9 +126,12 @@ function hookInterfaceHandler(handler) {
 function mockResponse(response, url, rule) {
     var contype = 'application/json';
     if (typeof rule.data == "string") {
-        if (rule.data.substr(-4) == "json") {
+        if (rule.data.substr(-5) == ".json") {
             rule.data = require((0, _path.resolve)(rule.data));
         } else {
+            if (rule.data.substr(-3) == ".js") {
+                rule.data = require((0, _path.resolve)(rule.data));
+            }
             contype = 'application/javascript; charset=utf-8';
         }
     }
