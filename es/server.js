@@ -60,6 +60,7 @@ function matchInterface(_ref) {
     });
 }
 function matchCDP(CDP, url) {
+    if (!CDP) return false;
     var pages = CDP.getInstance().pages;
     var scriptmocky = [];
     pages && pages.forEach(function (page) {
