@@ -1,8 +1,5 @@
 /**
- * 独立使用配置，本例子是代理到斑马预发环境
- * domainy: 域名重写规则，主要用于远程调试，如果是本地有host配置，则不用设置该配置项，其中path参数用于匹配url，data是对应替换值，__ip__会被替换成本地ip
- * proxy: 资源和端口映射规则，其中path参数用于匹配url，data是设置参数
- * mocky: 数据mock配置，需要设置mock:true 才生效，其中path参数用于匹配url，data是返回的数据，目前支持mtop的请求mock
+ * adev配置文件，详情：https://www.atatech.org/articles/135865
  */
 
 const targetMockServer = 'https://127.0.0.1/';
@@ -12,14 +9,15 @@ module.exports = {
     domain: false, // true to apply new domain, false to use ip, or you self domain string like "test.tmall.com"
     debug: true,              // enable debug
     mock: false,               // enable mock
+    env: "", // pre预发，prod线上，daily日常，对应于mtop不同请求
     debugPort: 9000,          // debug server port
     cmds: [                   // cmds you want run 
         // "tap server"      
     ],
     scripts: [                // scripts you want to inject to the html 
     ],
-    urlsuffix: encodeURIComponent("wow/ceshi/act/hurongwebbased"),
-    simulator: "//irma.work.ucweb.local/#/remote/remote-control-devices",   // web simulator url
+    // urlsuffix: encodeURIComponent("wow/ceshi/act/hurongwebbased"),
+    // simulator: "//irma.work.ucweb.local/#/remote/remote-control-devices",   // web simulator url
     // simulator: "//mds.alibaba-inc.com/device/93c29bb90005",   // web simulator url, 需要填写云真机的url
     domainy: [{                     // proxy domain config, if not for remote debug, no need to config, 
         path: "g-assets.daily.taobao.net",
@@ -47,7 +45,7 @@ module.exports = {
     },
     mocky: [{
         path: "getBrandWelfare",
-        // data: require("./demo/getBrandWelfare.json")
+        data: "./demo/getBrandWelfare.json"
     }, {
         path: "apiOnMockServer",
         routeTo: targetMockServer

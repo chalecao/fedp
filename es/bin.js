@@ -56,19 +56,19 @@ var configfile = (0, _opts.get)('config');
 
 function createConfig() {
     var list = new _promptList2.default({
-        name: 'Select Scene',
-        message: 'Which Scene you want to use?',
+        name: '开发场景',
+        message: '你处于那种开发场景?',
         // choices may be defined as an array or a function that returns an array
-        choices: ['zebra-component', 'zebra-sourcecode', 'independent']
+        choices: ['源码页面开发', '斑马模块开发', '独立项目']
     });
     list.run().then(function (answer) {
         var fileName = ".adev.config.example.js";
         switch (answer) {
-            case 'zebra-component':
+            case '斑马模块开发':
                 fileName = ".adev.config.component.js";break;
-            case 'zebra-sourcecode':
-                fileName = ".adev.config.code.js";break;
-            case 'independent':
+            case '源码页面开发':
+                fileName = ".adev.config.source.js";break;
+            case '独立项目':
                 fileName = ".adev.config.independent.js";break;
         }
         (0, _util.writeFile)((0, _path.resolve)(__dirname, "../" + fileName), (0, _path.resolve)(process.cwd(), "adev.config.js"));
@@ -82,6 +82,6 @@ if (arg1 == "init") {
         createConfig();
     } else {
         var configFilePath = (0, _path.resolve)(configfile || "adev.config.js");
-        (0, _main2.default)(port, require(configFilePath));
+        (0, _main2.default)(port, configFilePath);
     }
 }

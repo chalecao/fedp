@@ -36,6 +36,8 @@ var _logger2 = _interopRequireDefault(_logger);
 
 var _path = require('path');
 
+var _util = require('./util');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var log = (0, _logger2.default)("server");
@@ -126,17 +128,17 @@ function hookInterfaceHandler(handler) {
 
 function mockResponse(response, url, rule) {
     var contype = 'application/json';
+    var res = "";
     if (typeof rule.data == "string") {
         if (rule.data.substr(-5) == ".json") {
-            rule.data = require((0, _path.resolve)(rule.data));
+            res = (0, _stringify2.default)((0, _util.forceRequire)((0, _path.resolve)(rule.data)));
         } else {
             if (rule.data.substr(-3) == ".js") {
-                rule.data = require((0, _path.resolve)(rule.data));
+                res = (0, _stringify2.default)((0, _util.forceRequire)((0, _path.resolve)(rule.data)));
             }
             contype = 'application/javascript; charset=utf-8';
         }
     }
-    var res = rule.data;
     if (typeof rule.data == "object") {
         res = (0, _stringify2.default)(rule.data);
     }
@@ -167,14 +169,14 @@ function mockResponse(response, url, rule) {
 function proxyResponse(requestOptions, rule) {
     if (rule.routeTo && rule.routeTo.match("//")) {
         // log.warn("route to : ", requestOptions)
-        requestOptions.origin = "https://chaoshi.m.tmall.com/";
-        requestOptions.referer = "https://chaoshi.m.tmall.com/";
+        requestOptions.origin = "https://taobao.com/";
+        requestOptions.referer = "https://taobao.com/";
         requestOptions.uri = _url2.default.parse(requestOptions.url);
-        requestOptions.headers.host = "h5api.m.tmall.com";
+        requestOptions.headers.host = "h5api.wapa.taobao.com";
         requestOptions.uri.hostname = _url2.default.parse(rule.routeTo).hostname;
         requestOptions.uri.protocol = _url2.default.parse(rule.routeTo).protocol;
         requestOptions.uri = _url2.default.format(requestOptions.uri);
-        requestOptions.cookie = rule.cookie || requestOptions.cookie;
+        requestOptions.cookie = requestOptions.cookie || rule.cookie;
         log.warn("route to : ", requestOptions.uri);
         return requestOptions;
     }
@@ -191,7 +193,6 @@ function createServer(port, cdp) {
             headers = request.headers;
 
         var requestOptions = handleRequest({ method: method, url: url, headers: headers });
-
         try {
             if (isAssets(requestOptions)) {
                 log.warn("Assets matched for: ", url);
@@ -202,7 +203,6 @@ function createServer(port, cdp) {
                     log.warn("mock rule matched for: ", url);
                     mockResponse(response, url, rule);
                 } else {
-
                     rule && (requestOptions = proxyResponse(requestOptions, rule));
                     requestOptions.gzip = true;
                     (0, _request2.default)(requestOptions, function (error, res, body) {
@@ -212,6 +212,11 @@ function createServer(port, cdp) {
                             var header = handleHeader(url, res, body);
                             body = handleBody(body);
                             header['content-encoding'] = "";
+                            if (res.headers['set-cookie']) {
+                                header['set-cookie'] = res.headers['set-cookie'].map(function (item) {
+                                    return item.replace(/Domain=.*com;/gi, "");
+                                });
+                            }
                             response.writeHead(res.statusCode, header);
                             response.end(body);
                         }

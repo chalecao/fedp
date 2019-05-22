@@ -1,6 +1,3 @@
-/**
- * hack mtop request, add handleRequestWillBeSent handleDataReceived for debug
- */
 module.exports = function mockJs() {
     function matchInterface(arr, url) {
         return arr.find(function (item) {
@@ -18,10 +15,13 @@ module.exports = function mockJs() {
                 'Content-Type': 'application/json;charset=UTF-8'
             }, args.api, args.type, args.data);
             if (window.mockPaths && matchInterface(mockPaths, args.api)) {
-                lib.mtop.config.prefix = '';             
-                lib.mtop.config.subDomain = '';            
-                lib.mtop.config.mainDomain = location.host;   
-
+                lib.mtop.config.prefix = '';
+                lib.mtop.config.subDomain = '';
+                lib.mtop.config.mainDomain = location.host;
+            } else {
+                lib.mtop.config.prefix = 'h5api';
+                lib.mtop.config.subDomain = window.mtopEnv || "m";
+                lib.mtop.config.mainDomain = 'tmall.com'
             }
             return _mtopreq.call(window.lib.mtop, args).then(function (res) {
                 window.handleResponseReceived && handleResponseReceived(reqid, headers, args.api, res);
@@ -40,6 +40,5 @@ module.exports = function mockJs() {
             requestAnimationFrame(start)
         }
     }
-
     start()
 }
