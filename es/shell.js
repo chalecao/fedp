@@ -33,7 +33,7 @@ function getLink(host, urlsuffix) {
             resolve('http://' + host + '/' + urlsuffix);
         } else {
             _shelljs2.default.exec('git remote -v', { silent: true }, function (code, stdout, stderr) {
-                if (/:(.*?)\.git/i.test(stdout)) {
+                if (/.com.(.*?)\.git/i.test(stdout)) {
                     var path = RegExp.$1.replace('/', '-');
                     var name = /mui-/.test(path) ? 'mobile' : 'index';
                     var url = 'http://' + host + '/' + path + '/' + name;

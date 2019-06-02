@@ -9,6 +9,7 @@ module.exports = {
     domain: false, // true to apply new domain, false to use ip, or you self domain string like "test.tmall.com"
     debug: true,              // enable debug
     mock: false,               // enable debug
+    urlsuffix: 'mobile',
     env: "", // pre预发，prod线上，daily日常，对应于mtop不同请求
     debugPort: 9000,          // debug server port
     cmds: [                   // cmds you want run 
