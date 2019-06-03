@@ -20,8 +20,8 @@ module.exports = {
     // simulator: "//irma.work.ucweb.local/#/remote/remote-control-devices",   // web simulator url
     // simulator: "//mds.alibaba-inc.com/device/93c29bb90005",   // web simulator url, 需要填写云真机的url
     domainy: [{                     // proxy domain config, if not for remote debug, no need to config
-        path: "g-assets.daily.taobao.net/\\?\\?",
-        data: "__ip__:8889/??"
+        path: "g-assets.daily.taobao.net/",
+        data: "__ip__:8889/"
     }],
     proxy: {
         host: [{              // proxy requestoption host config
@@ -40,6 +40,9 @@ module.exports = {
         }],
         port: [{              // proxy requestoption port config
             path: "\\?\\?",
+            data: 8000
+        }, {              // proxy requestoption port config
+            path: "css",
             data: 8000
         }, {
             path: ".*",
