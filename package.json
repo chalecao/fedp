@@ -1,5 +1,5 @@
 {
-  "name": "adev",
+  "name": "@fed/adev",
   "version": "1.3.13",
   "description": "a dev tool make you debug and mock data easy!",
   "main": "index.js",
