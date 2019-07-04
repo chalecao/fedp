@@ -48,7 +48,7 @@ function makeSpinner(txt) {
  * @param {*} scripts 脚本链接url或者是脚本内容
  */
 var injectScripts = exports.injectScripts = function injectScripts(scripts) {
-    return function (body) {
+    return function (body, url) {
         var _script = "";
         scripts.forEach(function (script) {
             if (script.match("//")) {
@@ -57,9 +57,8 @@ var injectScripts = exports.injectScripts = function injectScripts(scripts) {
                 _script += '<script>' + script + '</script>';
             }
         });
-        var bd = String(body);
-        console.log(bd);
-        if (bd.match("DOCTYPE") && bd.match("head") && bd.match("body") && bd.match("html")) {
+
+        if (url.substr(-5) == ".html") {
             return String(body).replace('<head>', '<head>' + _script);
         } else {
             return String(body);

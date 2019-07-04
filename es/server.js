@@ -92,9 +92,9 @@ function handleHeader(url, res, body) {
     return res.headers;
 }
 
-function handleBody(body) {
+function handleBody(body, url) {
     bodyHandlers.reverse().forEach(function (handler) {
-        body = handler(body);
+        body = handler(body, url);
     });
     return body;
 }
@@ -210,7 +210,7 @@ function createServer(port, cdp) {
                             response.end('error: ' + error.message);
                         } else {
                             var header = handleHeader(url, res, body);
-                            body = handleBody(body);
+                            body = handleBody(body, url);
                             header['content-encoding'] = "";
                             if (res.headers['set-cookie']) {
                                 header['set-cookie'] = res.headers['set-cookie'].map(function (item) {

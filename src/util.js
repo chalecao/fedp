@@ -16,7 +16,7 @@ export function makeSpinner(txt) {
  * 注入javascript脚本
  * @param {*} scripts 脚本链接url或者是脚本内容
  */
-export const injectScripts = (scripts) => (body) => {
+export const injectScripts = (scripts) => (body, url) => {
     let _script = ""
     scripts.forEach(script => {
         if (script.match("//")) {
@@ -25,9 +25,8 @@ export const injectScripts = (scripts) => (body) => {
             _script += `<script>${script}</script>`;
         }
     })
-    let bd = String(body)
-    console.log(bd)
-    if (bd.match("DOCTYPE") && bd.match("head") && bd.match("body") && bd.match("html")) {
+
+    if (url.substr(-5) == ".html") {
         return String(body).replace('<head>', `<head>${_script}`);
     } else {
         return String(body);
