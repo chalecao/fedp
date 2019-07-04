@@ -4,7 +4,7 @@
   "description": "a dev tool make you debug and mock data easy!",
   "main": "index.js",
   "bin": {
-    "adev": "./es/bin.js"
+    "fedev": "./es/bin.js"
   },
   "scripts": {
     "babel": "babel src/ -d es/ && cp src/mock-mtop.js es/mock-mtop.js",
@@ -12,10 +12,11 @@
     "getca": "node rootca.js"
   },
   "keywords": [
+    "dev",
     "proxy",
     "ajax"
   ],
-  "author": "haomou",
+  "author": "chalecao",
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
