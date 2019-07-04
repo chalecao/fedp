@@ -57,8 +57,12 @@ var injectScripts = exports.injectScripts = function injectScripts(scripts) {
                 _script += '<script>' + script + '</script>';
             }
         });
-
-        return String(body).replace('<head>', '<head>' + _script);
+        var bd = String(body);
+        if (bd.match("DOCTYPE") && bd.match("head") && bd.match("body") && bd.match("html")) {
+            return String(body).replace('<head>', '<head>' + _script);
+        } else {
+            return String(body);
+        }
     };
 };
 /**

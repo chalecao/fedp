@@ -25,8 +25,13 @@ export const injectScripts = (scripts) => (body) => {
             _script += `<script>${script}</script>`;
         }
     })
+    let bd = String(body)
+    if (bd.match("DOCTYPE") && bd.match("head") && bd.match("body") && bd.match("html")) {
+        return String(body).replace('<head>', `<head>${_script}`);
+    } else {
+        return String(body);
+    }
 
-    return String(body).replace('<head>', `<head>${_script}`);
 }
 /**
  * 根据domainy的配置（支持替换__ip__为server的ip），匹配的domain换成ip
