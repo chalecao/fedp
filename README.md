@@ -1,14 +1,14 @@
-## xdev
-xdev = a dev tool for you which makes you happier in coding. with config file you specified, you can config the proxy rule and mock data rule in you project or anywhere.
+## fedp
+fedp = a front end dev proxy tool for you which makes you happier in coding. with config file you specified, you can config the proxy rule and mock data rule in you project or anywhere.
 
 ## usage
 
 ```
-tnpm install xdev -g
+tnpm install fedp -g
 
-xdev init
+fedp init
 
-xdev -c config.js
+fedp -c config.js
 ```
 
 ## LICENCE
