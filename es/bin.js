@@ -62,7 +62,7 @@ function createConfig() {
         choices: ['源码页面开发', '斑马模块开发', '独立项目']
     });
     list.run().then(function (answer) {
-        var fileName = ".adev.config.example.js";
+        var fileName = ".adev.config.independent.js";
         switch (answer) {
             case '斑马模块开发':
                 fileName = ".adev.config.component.js";break;

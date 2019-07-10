@@ -1,5 +1,5 @@
 /**
- * adev配置文件，详情：https://www.atatech.org/articles/135865
+ * fedp配置文件
  */
 
 const targetMockServer = 'https://127.0.0.1/';

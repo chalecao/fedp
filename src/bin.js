@@ -48,7 +48,7 @@ function createConfig() {
         ]
     });
     list.run().then(function (answer) {
-        let fileName = ".adev.config.example.js"
+        let fileName = ".adev.config.independent.js"
         switch (answer) {
             case '斑马模块开发': fileName = ".adev.config.component.js"; break;
             case '源码页面开发': fileName = ".adev.config.source.js"; break;

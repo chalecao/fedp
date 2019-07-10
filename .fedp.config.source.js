@@ -1,5 +1,5 @@
 /**
- * adev配置文件，详情：https://www.atatech.org/articles/135865
+ * fedp配置文件
  */
 module.exports = {
     domain: false,// 可以指定mock server绑定的域名，默认是绑定到ip 
