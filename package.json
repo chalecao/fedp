@@ -8,7 +8,7 @@
   },
   "scripts": {
     "babel": "babel src/ -d es/ && cp src/mock-mtop.js es/mock-mtop.js",
-    "server": "npm run babel && node es/bin.js",
+    "start": "npm run babel && node es/bin.js",
     "getca": "node rootca.js"
   },
   "keywords": [

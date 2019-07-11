@@ -48,23 +48,23 @@ function createConfig() {
         ]
     });
     list.run().then(function (answer) {
-        let fileName = ".adev.config.independent.js"
+        let fileName = ".fedp.config.independent.js"
         switch (answer) {
-            case '斑马模块开发': fileName = ".adev.config.component.js"; break;
-            case '源码页面开发': fileName = ".adev.config.source.js"; break;
-            case '独立项目': fileName = ".adev.config.independent.js"; break;
+            case '斑马模块开发': fileName = ".fedp.config.component.js"; break;
+            case '源码页面开发': fileName = ".fedp.config.source.js"; break;
+            case '独立项目': fileName = ".fedp.config.independent.js"; break;
         }
-        writeFile(resolve(__dirname, "../" + fileName), resolve(process.cwd(), "adev.config.js"))
+        writeFile(resolve(__dirname, "../" + fileName), resolve(process.cwd(), "fedp.config.js"))
     });
 }
 
 if (arg1 == "init") {
     createConfig()
 } else {
-    if (!configfile && !fs.existsSync(resolve(process.cwd(), "adev.config.js"))) {
+    if (!configfile && !fs.existsSync(resolve(process.cwd(), "fedp.config.js"))) {
         createConfig()
     } else {
-        let configFilePath = resolve(configfile || "adev.config.js");
+        let configFilePath = resolve(configfile || "fedp.config.js");
         createApp(port, configFilePath)
     }
 }
