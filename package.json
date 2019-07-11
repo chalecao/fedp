@@ -1,6 +1,6 @@
 {
   "name": "fedp",
-  "version": "1.3.17",
+  "version": "1.3.18",
   "description": "fedp = a front end dev proxy tool make you debug and mock data easy!",
   "main": "index.js",
   "bin": {
