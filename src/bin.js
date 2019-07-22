@@ -42,16 +42,16 @@ function createConfig() {
         message: '你处于那种开发场景?',
         // choices may be defined as an array or a function that returns an array
         choices: [
-            '源码页面开发',
-            '斑马模块开发',
+            '源码页面',
+            '模块开发',
             '独立项目'
         ]
     });
     list.run().then(function (answer) {
         let fileName = ".fedp.config.independent.js"
         switch (answer) {
-            case '斑马模块开发': fileName = ".fedp.config.component.js"; break;
-            case '源码页面开发': fileName = ".fedp.config.source.js"; break;
+            case '模块开发': fileName = ".fedp.config.component.js"; break;
+            case '源码页面': fileName = ".fedp.config.source.js"; break;
             case '独立项目': fileName = ".fedp.config.independent.js"; break;
         }
         writeFile(resolve(__dirname, "../" + fileName), resolve(process.cwd(), "fedp.config.js"))

@@ -4,7 +4,7 @@ fedp = a front end dev proxy tool for you which makes you happier in coding. wit
 ## usage
 
 ```
-tnpm install fedp -g
+npm install fedp -g
 
 fedp init
 
