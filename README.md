@@ -13,5 +13,8 @@ fedp init
 fedp -c config.js
 ```
 
+## debug
+
+
 ## LICENCE
 MIT
